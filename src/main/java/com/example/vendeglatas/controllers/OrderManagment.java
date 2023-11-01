@@ -9,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -16,11 +17,13 @@ import java.net.URL;
 import java.util.*;
 
 public class OrderManagment implements Initializable {
+    @FXML private VBox textContainerForBill = new VBox();
     @FXML private VBox buttonContainerForProductsCategory = new VBox();
     @FXML private VBox buttonContainerForProductsName = new VBox();
 
-    private void handleProductName(String name) {
-        System.out.println(name);
+    private void handleProductName(Product product) {
+        Label newProduct = new Label(product.getName() + ", " + product.getPrice() + "Ft");
+        textContainerForBill.getChildren().add(newProduct);
     }
 
     public void handleProductCategory(List<Product> products, String category){
@@ -30,7 +33,7 @@ public class OrderManagment implements Initializable {
             Product product = iterator.next();
             if (product.getCategory().equals(category)){
                 Button button = new Button(product.getName());
-                button.setOnAction(e -> handleProductName(product.getName()));
+                button.setOnAction(e -> handleProductName(product));
                 buttonContainerForProductsName.getChildren().add(button);
             }
         }
@@ -54,6 +57,8 @@ public class OrderManagment implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Label label = new Label("xyz asztal számlája");
+        textContainerForBill.getChildren().add(label);
         listProducts();
     }
 
