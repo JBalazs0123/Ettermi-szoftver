@@ -2,20 +2,20 @@ package com.example.vendeglatas.modules;
 
 public class Product {
     private int id;
+    private String category;
     private String descripiton;
-    private int amount;
+    private String name;
     private int price;
 
-    public Product(int id, String descripiton, int amount, int price) {
+    public Product(int id, String category, String descripiton, String name, int price) {
         this.id = id;
+        this.category = category;
         this.descripiton = descripiton;
-        this.amount = amount;
+        this.name = name;
         this.price = price;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
@@ -29,12 +29,20 @@ public class Product {
         this.descripiton = descripiton;
     }
 
-    public int getAmount() {
-        return amount;
+    public String getCategory() {
+        return category;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getPrice() {

@@ -1,5 +1,6 @@
 package com.example.vendeglatas.database;
 
+import com.example.vendeglatas.modules.Product;
 import com.example.vendeglatas.modules.Restaurant;
 import com.example.vendeglatas.database.DAO;
 
@@ -15,4 +16,6 @@ public interface IDAO {
     void addRestaurant(Restaurant restaurant);
 
     void deleteRestaurant(String nev);
+
+    List<Product> getProducts();
 }

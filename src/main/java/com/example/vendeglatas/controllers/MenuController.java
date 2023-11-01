@@ -9,13 +9,17 @@ import java.io.IOException;
 
 public class MenuController {
 
-    public void onTestTable1(ActionEvent actionEvent) {
+    public void onTestTable1(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("OrderManagment.fxml"));
+        Parent root = loader.load();
+        StartApplication.setRoot(root);
     }
 
     public void onTestTable2(ActionEvent actionEvent) {
     }
 
     public void onTestTable3(ActionEvent actionEvent) {
+
     }
 
     public void onOrderManagment(ActionEvent actionEvent) throws IOException {

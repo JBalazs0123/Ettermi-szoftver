@@ -1,5 +1,6 @@
 package com.example.vendeglatas.database;
 
+import com.example.vendeglatas.modules.Product;
 import com.example.vendeglatas.modules.Restaurant;
 
 import java.util.ArrayList;
@@ -12,6 +13,26 @@ public class DAO implements IDAO{
         Class.forName(DRIVER);
         Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
         return con;
+    }
+
+    public List<Product> getProducts() {
+        String sql = "SELECT * FROM termek";
+        List<Product> products = new ArrayList<>();
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Product tmp = new Product(resultSet.getInt(1), resultSet.getString(2),
+                        resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5));
+                products.add(tmp);
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return products;
     }
 
     public List<Restaurant> getRestaurants() {
