@@ -16,6 +16,7 @@
       <Button layoutX="149.0" layoutY="681.0" mnemonicParsing="false" onAction="#onNextToPay" text="Tovább a fizetéshez" />
       <VBox fx:id="buttonContainerForProductsName" layoutX="640.0" layoutY="260.0" prefHeight="416.0" prefWidth="602.0" />
       <VBox fx:id="buttonContainerForProductsCategory" layoutX="640.0" layoutY="60.0" prefHeight="200.0" prefWidth="628.0" />
-      <VBox fx:id="textContainerForBill" layoutX="92.0" layoutY="106.0" prefHeight="498.0" prefWidth="246.0" />
+      <VBox fx:id="textContainerForBill" layoutX="92.0" layoutY="106.0" prefHeight="448.0" prefWidth="246.0" />
+      <VBox fx:id="textContainerForPrice" layoutX="84.0" layoutY="605.0" prefHeight="58.0" prefWidth="156.0" />
    </children>
 </AnchorPane>

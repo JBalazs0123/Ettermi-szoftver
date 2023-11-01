@@ -17,13 +17,24 @@ import java.net.URL;
 import java.util.*;
 
 public class OrderManagment implements Initializable {
+    @FXML private VBox textContainerForPrice = new VBox();
     @FXML private VBox textContainerForBill = new VBox();
     @FXML private VBox buttonContainerForProductsCategory = new VBox();
     @FXML private VBox buttonContainerForProductsName = new VBox();
+    private int amount = 0;
+
+    private void handlePrice(int amount){
+        textContainerForPrice.getChildren().clear();
+        Label price = new Label("Összesen: " + amount);
+        textContainerForPrice.getChildren().addLast(price);
+    }
 
     private void handleProductName(Product product) {
+        amount += product.getPrice();
         Label newProduct = new Label(product.getName() + ", " + product.getPrice() + "Ft");
         textContainerForBill.getChildren().add(newProduct);
+        handlePrice(amount);
+
     }
 
     public void handleProductCategory(List<Product> products, String category){
