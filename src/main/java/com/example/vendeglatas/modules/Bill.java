@@ -2,14 +2,14 @@ package com.example.vendeglatas.modules;
 
 import java.util.Date;
 
-public class bill {
+public class Bill {
     private int id;
     private int employeId;
     private int price;
     private Date time;
     private String payMethod;
 
-    public bill(int id, int employeId, int price, Date time, String payMethod) {
+    public Bill(int id, int employeId, int price, Date time, String payMethod) {
         this.id = id;
         this.employeId = employeId;
         this.price = price;

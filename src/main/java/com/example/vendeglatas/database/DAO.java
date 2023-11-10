@@ -1,5 +1,6 @@
 package com.example.vendeglatas.database;
 
+import com.example.vendeglatas.modules.Employe;
 import com.example.vendeglatas.modules.Product;
 import com.example.vendeglatas.modules.Restaurant;
 
@@ -13,6 +14,66 @@ public class DAO implements IDAO{
         Class.forName(DRIVER);
         Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
         return con;
+    }
+
+    public void saveEmploye(Employe employe){
+        String sql = "INSERT INTO alkalmazott(nev, alkalmazottNev, jelszo, beosztas)" +
+                " VALUES ('" + employe.getRestaurantName() + "', '" + employe.getName() + "', '" + employe.getPassword() + "', '" + employe.getPost() + "')";
+        try {
+            Connection con = DAO();
+            Statement statement = con.createStatement();
+            statement.execute(sql);
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Employe> getEmploye() {
+        String sql = "SELECT * FROM alkalmazott";
+        List<Employe> employes = new ArrayList<>();
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Employe tmp = new Employe(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5));
+                employes.add(tmp);
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return employes;
+    }
+
+    public void deleteEmploye(String name) {
+        String sql ="DELETE FROM alkalmazott WHERE alkalmazottNev='" + name + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateEmploye(String name, String newPost){
+        String sql ="UPDATE alkalmazott SET beosztas = '" + newPost + "'WHERE alkalmazottNev='" + name + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Product> getProducts() {

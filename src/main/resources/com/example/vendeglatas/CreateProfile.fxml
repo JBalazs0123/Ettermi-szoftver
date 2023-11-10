@@ -1,13 +1,111 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.CreateProfile">
+<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.CreateProfile">
    <children>
-      <Text layoutX="289.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profil létrehozása" />
-      <Button layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#onBack" text="Vissza" />
+      <Text layoutX="550.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Profil szerkesztés">
+         <font>
+            <Font size="24.0" />
+         </font></Text>
+      <Button layoutX="14.0" layoutY="681.0" mnemonicParsing="false" onAction="#onBack" text="Vissza" />
+      <Pane layoutX="14.0" layoutY="174.0" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Label layoutX="77.0" layoutY="91.0" text="Név:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Text layoutX="92.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Új alkalmazott regisztrálása">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Label layoutX="71.0" layoutY="133.0" text="Jelszó:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="61.0" layoutY="217.0" prefHeight="20.0" prefWidth="60.0" text="Beosztás:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="nameRegist" layoutX="139.0" layoutY="89.0" prefHeight="25.0" prefWidth="180.0" />
+            <TextField fx:id="pswRegist" layoutX="139.0" layoutY="131.0" prefHeight="25.0" prefWidth="180.0" />
+            <ComboBox fx:id="postRegist" layoutX="139.0" layoutY="215.0" prefHeight="25.0" prefWidth="180.0" />
+            <Button layoutX="95.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse" />
+            <Button layoutX="218.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSaveRegist" text="Mentés" />
+            <TextField fx:id="pswRegistAgain" layoutX="139.0" layoutY="173.0" prefHeight="25.0" prefWidth="180.0" />
+            <Label layoutX="52.0" layoutY="175.0" text="Jelszó ismét:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="messageRegist" layoutX="74.0" layoutY="267.0" prefHeight="20.0" prefWidth="220.0" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="866.0" layoutY="174.0" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Text layoutX="156.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Szerkesztés">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <Text layoutX="35.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Kérjük válasz ki a törölni kívánt személy nevét vagy az előléptetni kivánt személy nevét és az új pozícióját!" wrappingWidth="331.904296875">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="nameBox" layoutX="168.0" layoutY="154.0" prefWidth="150.0" />
+            <Text layoutX="101.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Név:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <Text layoutX="87.0" layoutY="219.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Beosztás:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+            <ComboBox fx:id="postBox" layoutX="168.0" layoutY="201.0" prefHeight="25.0" prefWidth="150.0" />
+            <Button layoutX="75.0" layoutY="308.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse" />
+            <Button layoutX="273.0" layoutY="308.0" mnemonicParsing="false" onAction="#onPostUpdate" text="Előléptetés" />
+            <Label fx:id="messageRegist1" layoutX="90.0" layoutY="255.0" prefHeight="20.0" prefWidth="220.0" textAlignment="CENTER">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="176.0" layoutY="308.0" mnemonicParsing="false" onAction="#onDelete" text="Törlés" />
+         </children>
+      </Pane>
+      <Pane layoutX="440.0" layoutY="174.0" prefHeight="400.0" prefWidth="400.0">
+         <children>
+            <Text layoutX="63.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Az Étterem alkalmazottainak listája">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Text>
+            <TableView fx:id="listTable" layoutX="80.0" layoutY="85.0" prefHeight="255.0" prefWidth="240.0">
+              <columns>
+                <TableColumn fx:id="nameTable" prefWidth="152.0" text="Név" />
+                <TableColumn fx:id="postTable" prefWidth="86.0" text="Beosztás" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
