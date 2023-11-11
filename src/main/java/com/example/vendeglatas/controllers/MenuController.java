@@ -1,13 +1,37 @@
 package com.example.vendeglatas.controllers;
 
 import com.example.vendeglatas.StartApplication;
+import com.example.vendeglatas.modules.Employe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 
 import java.io.IOException;
 
 public class MenuController {
+
+    public Button buttonOrderManagment;
+    public Button buttonDailyRecap;
+    public Button buttonCreateProfile;
+    public Button buttonEditProduct;
+    private Employe currentEmploye;
+
+    public Employe getCurrentEmploye() {
+        return currentEmploye;
+    }
+
+    public void setCurrentEmploye(Employe currentEmploye) {
+        this.currentEmploye = currentEmploye;
+        if(this.currentEmploye.getPost().equals("Pincér")){
+            buttonEditProduct.setVisible(false);
+            buttonCreateProfile.setVisible(false);
+            buttonDailyRecap.setVisible(false);
+        } else if (this.currentEmploye.getPost().equals("Főpincér")) {
+            buttonEditProduct.setVisible(false);
+            buttonCreateProfile.setVisible(false);
+        }
+    }
 
     public void onTestTable1(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("OrderManagment.fxml"));
