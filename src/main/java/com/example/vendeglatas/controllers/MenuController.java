@@ -70,10 +70,9 @@ public class MenuController {
         StartApplication.setRoot(root);
     }
 
-    public void onBack(ActionEvent actionEvent) throws IOException {
+    public void onExit(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("MainPage.fxml"));
         Parent root = loader.load();
         StartApplication.setRoot(root);
     }
-
 }
