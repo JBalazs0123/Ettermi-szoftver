@@ -10,29 +10,42 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class OrderManagment implements Initializable {
-    @FXML private VBox textContainerForPrice = new VBox();
-    @FXML private VBox textContainerForBill = new VBox();
-    @FXML private VBox buttonContainerForProductsCategory = new VBox();
-    @FXML private VBox buttonContainerForProductsName = new VBox();
+    @FXML private HBox priceContainer = new HBox();
+    @FXML private GridPane textContainerForBill = new GridPane();
+    @FXML private GridPane buttonContainerForProductsCategory = new GridPane();
+    @FXML private GridPane buttonContainerForProductsName = new GridPane();
     private int amount = 0;
+    private int rowForBill = 1;
 
     private void handlePrice(int amount){
-        textContainerForPrice.getChildren().clear();
-        Label price = new Label("Összesen: " + amount);
-        textContainerForPrice.getChildren().addLast(price);
+        Label amountGridPane = new Label("Összesen " + amount + " Ft");
+        amountGridPane.setFont(Font.font(14));
+        priceContainer.getChildren().clear();
+        priceContainer.getChildren().add(amountGridPane);
     }
 
     private void handleProductName(Product product) {
         amount += product.getPrice();
-        Label newProduct = new Label(product.getName() + ", " + product.getPrice() + "Ft");
-        textContainerForBill.getChildren().add(newProduct);
+
+        Label newProduct = new Label(product.getName());
+        newProduct.setFont(Font.font(14));
+        Label newProductPrice = new Label(product.getPrice() + "Ft");
+        newProductPrice.setFont(Font.font(14));
+
+        textContainerForBill.add(newProduct, 0, rowForBill);
+        textContainerForBill.add(newProductPrice, 1, rowForBill);
+        rowForBill++;
+
         handlePrice(amount);
 
     }
@@ -40,12 +53,22 @@ public class OrderManagment implements Initializable {
     public void handleProductCategory(List<Product> products, String category){
         buttonContainerForProductsName.getChildren().clear();
         Iterator<Product> iterator = products.iterator();
+        int columnIndex = 0;
+        int rowIndex = 0;
         while (iterator.hasNext()) {
             Product product = iterator.next();
             if (product.getCategory().equals(category)){
                 Button button = new Button(product.getName());
+                button.setFont(Font.font(14));
+                button.setPrefWidth(140);
+                button.setPrefHeight(60);
                 button.setOnAction(e -> handleProductName(product));
-                buttonContainerForProductsName.getChildren().add(button);
+                buttonContainerForProductsName.add(button, columnIndex, rowIndex);
+                columnIndex++;
+                if (columnIndex == 5) {
+                    columnIndex = 0;
+                    rowIndex++;
+                }
             }
         }
     }
@@ -58,18 +81,32 @@ public class OrderManagment implements Initializable {
             Product product = iterator.next();
             uniqueCategory.add(product.getCategory());
         }
+        int columnIndex = 0;
+        int rowIndex = 0;
         for (String category : uniqueCategory){
             Button button = new Button(category);
+            button.setFont(Font.font(16));
+            button.setPrefWidth(140);
+            button.setPrefHeight(60);
             button.setOnAction(e -> handleProductCategory(products, category));
-            buttonContainerForProductsCategory.getChildren().add(button);
+            buttonContainerForProductsCategory.add(button, columnIndex, rowIndex);
+            columnIndex++;
+            if (columnIndex == 5) {
+                columnIndex = 0;
+                rowIndex++;
+            }
         }
-
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Label label = new Label("xyz asztal számlája");
-        textContainerForBill.getChildren().add(label);
+        Label labelProducts = new Label("Termékek");
+        labelProducts.setFont(Font.font(14));
+        Label labelPrice = new Label("Ár");
+        labelPrice.setFont(Font.font(14));
+        textContainerForBill.add(labelProducts, 0, 0);
+        textContainerForBill.add(labelPrice, 1, 0);
+
         listProducts();
     }
 
