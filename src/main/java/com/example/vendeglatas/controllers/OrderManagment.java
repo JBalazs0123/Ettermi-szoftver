@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -37,6 +38,17 @@ public class OrderManagment implements Initializable {
         priceContainer.getChildren().add(amountGridPane);
     }
 
+    private void noMoreProductErrorMSG(){
+        String errorMessage = "További termékek hozzáadása nem lehetséges!";
+
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Maximalis termékszám!");
+        alert.setHeaderText(null);
+        alert.setContentText(errorMessage);
+
+        alert.showAndWait();
+    }
+
     private void handleProductName(Product product) {
         amount += product.getPrice();
 
@@ -46,14 +58,7 @@ public class OrderManagment implements Initializable {
         newProductPrice.setFont(Font.font(14));
 
         if(rowForBill>25){
-            String errorMessage = "További termékek hozzáadása nem lehetséges!";
-
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Maximalis termékszám!");
-            alert.setHeaderText(null);
-            alert.setContentText(errorMessage);
-
-            alert.showAndWait();
+            noMoreProductErrorMSG();
             return;
         }
 
@@ -62,7 +67,6 @@ public class OrderManagment implements Initializable {
         rowForBill++;
 
         handlePrice(amount);
-
     }
 
     public void handleProductCategory(List<Product> products, String category){
@@ -131,6 +135,31 @@ public class OrderManagment implements Initializable {
         StartApplication.setRoot(root);
     }
 
-    public void onNextToPay(ActionEvent actionEvent) {
+    private void questionForBillingBreakdown() throws IOException {
+        String question = "Szeretné bontani a számlát?";
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Számlabontás");
+        alert.setHeaderText(null);
+        alert.setContentText(question);
+
+        ButtonType buttonTypeYes = new ButtonType("Igen");
+        ButtonType buttonTypeNo = new ButtonType("Nem");
+        alert.getButtonTypes().setAll(buttonTypeYes, buttonTypeNo);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == buttonTypeYes) {
+            FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillingBreakdown.fxml"));
+            Parent root = loader.load();
+            StartApplication.setRoot(root);
+        } else {
+            FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
+            Parent root = loader.load();
+            StartApplication.setRoot(root);
+        }
+    }
+
+    public void onNextToPay(ActionEvent actionEvent) throws IOException {
+        questionForBillingBreakdown();
     }
 }
