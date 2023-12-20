@@ -8,8 +8,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,11 +26,12 @@ public class OrderManagment implements Initializable {
     @FXML private GridPane textContainerForBill = new GridPane();
     @FXML private GridPane buttonContainerForProductsCategory = new GridPane();
     @FXML private GridPane buttonContainerForProductsName = new GridPane();
+
     private int amount = 0;
     private int rowForBill = 1;
 
     private void handlePrice(int amount){
-        Label amountGridPane = new Label("Összesen " + amount + " Ft");
+        Label amountGridPane = new Label("Összesen: " + amount + " Ft");
         amountGridPane.setFont(Font.font(14));
         priceContainer.getChildren().clear();
         priceContainer.getChildren().add(amountGridPane);
@@ -41,6 +44,18 @@ public class OrderManagment implements Initializable {
         newProduct.setFont(Font.font(14));
         Label newProductPrice = new Label(product.getPrice() + "Ft");
         newProductPrice.setFont(Font.font(14));
+
+        if(rowForBill>25){
+            String errorMessage = "További termékek hozzáadása nem lehetséges!";
+
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Maximalis termékszám!");
+            alert.setHeaderText(null);
+            alert.setContentText(errorMessage);
+
+            alert.showAndWait();
+            return;
+        }
 
         textContainerForBill.add(newProduct, 0, rowForBill);
         textContainerForBill.add(newProductPrice, 1, rowForBill);
@@ -101,9 +116,9 @@ public class OrderManagment implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Label labelProducts = new Label("Termékek");
-        labelProducts.setFont(Font.font(14));
+        labelProducts.setFont(Font.font(16));
         Label labelPrice = new Label("Ár");
-        labelPrice.setFont(Font.font(14));
+        labelPrice.setFont(Font.font(16));
         textContainerForBill.add(labelProducts, 0, 0);
         textContainerForBill.add(labelPrice, 1, 0);
 

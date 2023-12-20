@@ -52,7 +52,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <GridPane fx:id="textContainerForBill" layoutX="66.0" layoutY="80.0" prefHeight="540.0" prefWidth="270.0">
+      <GridPane fx:id="textContainerForBill" layoutX="66.0" layoutY="80.0" prefHeight="540.0" prefWidth="270.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-hgap: 1;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="145.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="75.0" />
@@ -88,6 +88,6 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <HBox fx:id="priceContainer" layoutX="66.0" layoutY="634.0" prefHeight="29.0" prefWidth="270.0" />
+      <HBox fx:id="priceContainer" layoutX="66.0" layoutY="627.0" prefHeight="29.0" prefWidth="270.0" style="-fx-border-width: 1; -fx-border-color: black;" />
    </children>
 </AnchorPane>
