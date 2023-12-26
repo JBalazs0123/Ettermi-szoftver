@@ -1,5 +1,6 @@
 package com.example.vendeglatas.modules;
 
+
 import java.util.Date;
 
 public class Order {
@@ -11,6 +12,13 @@ public class Order {
 
     public Order(int id, int tableNumber, int employeId, int numberOfProduct, Date date) {
         this.id = id;
+        this.tableNumber = tableNumber;
+        this.employeId = employeId;
+        this.numberOfProduct = numberOfProduct;
+        this.date = date;
+    }
+
+    public Order(int tableNumber, int employeId, int numberOfProduct, Date date) {
         this.tableNumber = tableNumber;
         this.employeId = employeId;
         this.numberOfProduct = numberOfProduct;

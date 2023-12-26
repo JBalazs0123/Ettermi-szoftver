@@ -1,8 +1,6 @@
 package com.example.vendeglatas.database;
 
-import com.example.vendeglatas.modules.Employe;
-import com.example.vendeglatas.modules.Product;
-import com.example.vendeglatas.modules.Restaurant;
+import com.example.vendeglatas.modules.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +12,62 @@ public class DAO implements IDAO{
         Class.forName(DRIVER);
         Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
         return con;
+    }
+
+    public void saveInclude(Include include){
+        String sql = "INSERT INTO tartalmaz VALUES (?, ?)";
+        try {
+            Connection connection = DAO();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, include.getOrderId());
+            statement.setInt(2, include.getProductId());
+            statement.executeUpdate();
+            statement.close();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveOrder(Order order){
+        String sql = "INSERT INTO rendeles VALUES (?, ?, ?, ?, ?)";
+        try {
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setInt(1, order.getId());
+            statement.setInt(2, order.getTableNumber());
+            statement.setInt(3, order.getEmployeId());
+            statement.setInt(4, order.getNumberOfProduct());
+            java.util.Date utilDate = order.getDate();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+            statement.setDate(5, sqlDate);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public int getNextOrderId(){
+        int biggestOrderId = -1;
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            String sql = "SELECT MAX(rendelesAzonosito) FROM rendeles";
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                biggestOrderId = resultSet.getInt(1);
+                biggestOrderId++;
+            }
+
+            resultSet.close();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return biggestOrderId;
     }
 
     public void saveEmploye(Employe employe){

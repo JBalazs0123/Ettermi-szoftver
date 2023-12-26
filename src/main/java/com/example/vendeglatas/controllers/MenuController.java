@@ -36,6 +36,8 @@ public class MenuController {
     public void onTestTable1(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("OrderManagment.fxml"));
         Parent root = loader.load();
+        OrderManagment controller = loader.getController();
+        controller.setCurrentEmploye(this.currentEmploye, 1);
         StartApplication.setRoot(root);
     }
 

@@ -2,6 +2,9 @@ package com.example.vendeglatas.controllers;
 
 import com.example.vendeglatas.StartApplication;
 import com.example.vendeglatas.database.DAO;
+import com.example.vendeglatas.modules.Employe;
+import com.example.vendeglatas.modules.Include;
+import com.example.vendeglatas.modules.Order;
 import com.example.vendeglatas.modules.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +23,8 @@ import javafx.scene.text.Font;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class OrderManagment implements Initializable {
@@ -28,8 +33,39 @@ public class OrderManagment implements Initializable {
     @FXML private GridPane buttonContainerForProductsCategory = new GridPane();
     @FXML private GridPane buttonContainerForProductsName = new GridPane();
 
+    private List<Include> currentIncludeList = new ArrayList<>();
+    private Order currentOrder;
+    private Date date = new Date();
+    private Employe currentEmploye;
+    private int tableNumber = 0;
     private int amount = 0;
     private int rowForBill = 1;
+
+    public Employe getCurrentEmploye() {
+        return currentEmploye;
+    }
+
+    public void makeaNewOrder(){
+        DAO dao = new DAO();
+        int nextOrderId = dao.getNextOrderId();
+        currentOrder = new Order(nextOrderId, getTableNumber(), getCurrentEmploye().getId(), 0, date);
+    }
+
+    public void setCurrentEmploye(Employe currentEmploye, int tableNumber) {
+        this.currentEmploye = currentEmploye;
+        setTableNumber(tableNumber);
+        makeaNewOrder();
+    }
+
+    public int getTableNumber() {
+        System.out.println(tableNumber);
+        return tableNumber;
+
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
+    }
 
     private void handlePrice(int amount){
         Label amountGridPane = new Label("Összesen: " + amount + " Ft");
@@ -61,6 +97,11 @@ public class OrderManagment implements Initializable {
             noMoreProductErrorMSG();
             return;
         }
+
+        currentOrder.setNumberOfProduct(currentOrder.getNumberOfProduct() + 1);
+
+        Include currentInclude = new Include(currentOrder.getId(), product.getId());
+        currentIncludeList.add(currentInclude);
 
         textContainerForBill.add(newProduct, 0, rowForBill);
         textContainerForBill.add(newProductPrice, 1, rowForBill);
@@ -130,6 +171,11 @@ public class OrderManagment implements Initializable {
     }
 
     public void onBack(ActionEvent actionEvent) throws IOException {
+        DAO dao = new DAO();
+        dao.saveOrder(currentOrder);
+        for (Include include : currentIncludeList){
+            dao.saveInclude(include);
+        }
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
         Parent root = loader.load();
         StartApplication.setRoot(root);
