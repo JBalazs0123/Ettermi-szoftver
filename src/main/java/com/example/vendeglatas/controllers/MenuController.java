@@ -41,11 +41,20 @@ public class MenuController {
         StartApplication.setRoot(root);
     }
 
-    public void onTestTable2(ActionEvent actionEvent) {
+    public void onTestTable2(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("OrderManagment.fxml"));
+        Parent root = loader.load();
+        OrderManagment controller = loader.getController();
+        controller.setCurrentEmploye(this.currentEmploye, 2);
+        StartApplication.setRoot(root);
     }
 
-    public void onTestTable3(ActionEvent actionEvent) {
-
+    public void onTestTable3(ActionEvent actionEvent) throws IOException {
+        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("OrderManagment.fxml"));
+        Parent root = loader.load();
+        OrderManagment controller = loader.getController();
+        controller.setCurrentEmploye(this.currentEmploye, 3);
+        StartApplication.setRoot(root);
     }
 
     public void onOrderManagment(ActionEvent actionEvent) throws IOException {

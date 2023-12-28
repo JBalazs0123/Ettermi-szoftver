@@ -210,6 +210,25 @@ public class OrderManagment implements Initializable {
         StartApplication.setRoot(root);
     }
 
+    private void questionForPayMethod(){
+        Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        paymentAlert.setTitle("Fizetési mód");
+        paymentAlert.setHeaderText(null);
+        paymentAlert.setContentText("Válassza ki a fizetési módot!");
+
+        ButtonType cashButton = new ButtonType("Készpénz");
+        ButtonType cardButton = new ButtonType("Bankkártya");
+
+        paymentAlert.getButtonTypes().setAll(cashButton, cardButton);
+
+        Optional<ButtonType> result = paymentAlert.showAndWait();
+        if (result.isPresent() && result.get() == cashButton) {
+            System.out.println("Készpénzzel fizet.");
+        } else {
+            System.out.println("Bankkártyával fizet.");
+        }
+    }
+
     //Megkerdezi a user-t, valaszanak megfelelo oldalra iranyit
     private void questionForBillingBreakdown() throws IOException {
         String question = "Szeretné bontani a számlát?";
@@ -229,9 +248,7 @@ public class OrderManagment implements Initializable {
             Parent root = loader.load();
             StartApplication.setRoot(root);
         } else {
-            FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
-            Parent root = loader.load();
-            StartApplication.setRoot(root);
+            questionForPayMethod();
         }
     }
 
