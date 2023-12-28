@@ -89,5 +89,10 @@
         </rowConstraints>
       </GridPane>
       <HBox fx:id="priceContainer" layoutX="66.0" layoutY="627.0" prefHeight="29.0" prefWidth="270.0" style="-fx-border-width: 1; -fx-border-color: black;" />
+      <Button layoutX="356.0" layoutY="681.0" mnemonicParsing="false" onAction="#onPreviousOrder" text="Legutóbbi rendelés">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

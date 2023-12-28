@@ -14,13 +14,71 @@ public class DAO implements IDAO{
         return con;
     }
 
+    public Product getProductById(int id){
+        String sql ="SELECT * FROM termek WHERE termekAzonosito='" + id + "'";
+        Product product = new Product(id);
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                product = new Product(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5));
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return product;
+    }
+
+    public int getOrderId(int tableNumber, int employeId){
+        int orderId = -1;
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            String sql = "SELECT MAX(rendelesAzonosito) FROM rendeles WHERE asztalszam='" + tableNumber + "' AND alkalmazottAzonosito='" + employeId + "'";
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            if (resultSet.next()) {
+                orderId = resultSet.getInt(1);
+            }
+
+            resultSet.close();
+            connection.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return orderId;
+    }
+
+    public List<Include> getIncludes(int orderId){
+        String sql ="SELECT * FROM tartalmaz WHERE rendelesAzonosito='" + orderId + "'";
+        List<Include> includes = new ArrayList<>();
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Include tmp = new Include(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3));
+                includes.add(tmp);
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return includes;
+    }
+
     public void saveInclude(Include include){
-        String sql = "INSERT INTO tartalmaz VALUES (?, ?)";
+        String sql = "INSERT INTO tartalmaz VALUES (?, ?, ?)";
         try {
             Connection connection = DAO();
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, include.getOrderId());
             statement.setInt(2, include.getProductId());
+            statement.setInt(3, include.getAmount());
             statement.executeUpdate();
             statement.close();
             connection.close();

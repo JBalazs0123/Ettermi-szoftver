@@ -3,10 +3,25 @@ package com.example.vendeglatas.modules;
 public class Include {
     private int orderId;
     private int productId;
+    private int amount;
+
+    public Include(int orderId, int productId, int amount) {
+        this.orderId = orderId;
+        this.productId = productId;
+        this.amount = amount;
+    }
 
     public Include(int orderId, int productId) {
         this.orderId = orderId;
         this.productId = productId;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public int getOrderId() {

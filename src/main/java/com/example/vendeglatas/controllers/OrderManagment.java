@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.net.Inet4Address;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -33,6 +34,7 @@ public class OrderManagment implements Initializable {
     @FXML private GridPane buttonContainerForProductsCategory = new GridPane();
     @FXML private GridPane buttonContainerForProductsName = new GridPane();
 
+    DAO dao = new DAO();
     private List<Include> currentIncludeList = new ArrayList<>();
     private Order currentOrder;
     private Date date = new Date();
@@ -46,7 +48,6 @@ public class OrderManagment implements Initializable {
     }
 
     public void makeaNewOrder(){
-        DAO dao = new DAO();
         int nextOrderId = dao.getNextOrderId();
         currentOrder = new Order(nextOrderId, getTableNumber(), getCurrentEmploye().getId(), 0, date);
     }
@@ -58,15 +59,15 @@ public class OrderManagment implements Initializable {
     }
 
     public int getTableNumber() {
-        System.out.println(tableNumber);
         return tableNumber;
-
     }
 
     public void setTableNumber(int tableNumber) {
         this.tableNumber = tableNumber;
     }
 
+
+    //osszesen mezo
     private void handlePrice(int amount){
         Label amountGridPane = new Label("Összesen: " + amount + " Ft");
         amountGridPane.setFont(Font.font(14));
@@ -85,6 +86,9 @@ public class OrderManagment implements Initializable {
         alert.showAndWait();
     }
 
+
+    //Szamlahoz adja a termékeket, bőviti ennek megfelelően a currentOrder termekszam adattagjat
+    //és a currentIncludeList-et is megfelelően bővíti
     private void handleProductName(Product product) {
         amount += product.getPrice();
 
@@ -100,7 +104,7 @@ public class OrderManagment implements Initializable {
 
         currentOrder.setNumberOfProduct(currentOrder.getNumberOfProduct() + 1);
 
-        Include currentInclude = new Include(currentOrder.getId(), product.getId());
+        Include currentInclude = new Include(currentOrder.getId(), product.getId(), 1);
         currentIncludeList.add(currentInclude);
 
         textContainerForBill.add(newProduct, 0, rowForBill);
@@ -110,6 +114,7 @@ public class OrderManagment implements Initializable {
         handlePrice(amount);
     }
 
+    //Kategőria kattintás után listázza a termékeket
     public void handleProductCategory(List<Product> products, String category){
         buttonContainerForProductsName.getChildren().clear();
         Iterator<Product> iterator = products.iterator();
@@ -133,6 +138,7 @@ public class OrderManagment implements Initializable {
         }
     }
 
+    //Termékek listázása, ez a függvény a termék kategóriákat írja ki
     public void listProducts(){
         List<Product> products = new DAO().getProducts();
         Iterator<Product> iterator = products.iterator();
@@ -158,6 +164,8 @@ public class OrderManagment implements Initializable {
         }
     }
 
+
+    //oldal létrehozásakor fut le
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Label labelProducts = new Label("Termékek");
@@ -171,16 +179,38 @@ public class OrderManagment implements Initializable {
     }
 
     public void onBack(ActionEvent actionEvent) throws IOException {
-        DAO dao = new DAO();
         dao.saveOrder(currentOrder);
+
+        Map<Integer, Integer> productIdAmountMap = new HashMap<>();
+        boolean runCounter = true;
+        int orderId = 0;
         for (Include include : currentIncludeList){
+            if(runCounter){
+                orderId = include.getOrderId();
+                runCounter = false;
+            }
+            int productId = include.getProductId();
+            int amount = include.getAmount();
+
+            productIdAmountMap.merge(productId, amount, Integer::sum);
+        }
+
+        for (Map.Entry<Integer, Integer> entry : productIdAmountMap.entrySet()){
+            int productId = entry.getKey();
+            int amount = entry.getValue();
+
+            Include include = new Include(orderId, productId, amount);
             dao.saveInclude(include);
         }
+
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
         Parent root = loader.load();
+        MenuController controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 
+    //Megkerdezi a user-t, valaszanak megfelelo oldalra iranyit
     private void questionForBillingBreakdown() throws IOException {
         String question = "Szeretné bontani a számlát?";
 
@@ -207,5 +237,18 @@ public class OrderManagment implements Initializable {
 
     public void onNextToPay(ActionEvent actionEvent) throws IOException {
         questionForBillingBreakdown();
+    }
+
+    public void nothing(){
+        System.out.println(getCurrentEmploye().getName() + ", " + getTableNumber());
+    }
+
+    public void onPreviousOrder(ActionEvent actionEvent) {
+        List<Include> previousIncludes = dao.getIncludes(dao.getOrderId(getTableNumber(), getCurrentEmploye().getId()));
+        for(Include include : previousIncludes){
+            for (int i=0; i<include.getAmount();i++){
+                handleProductName(dao.getProductById(include.getProductId()));
+            }
+        }
     }
 }
