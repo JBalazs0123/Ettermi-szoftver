@@ -37,7 +37,6 @@ public class OrderManagment implements Initializable {
     DAO dao = new DAO();
     private List<Include> currentIncludeList = new ArrayList<>();
     private Order currentOrder;
-    private Date date = new Date();
     private Employe currentEmploye;
     private int tableNumber = 0;
     private int amount = 0;
@@ -49,7 +48,7 @@ public class OrderManagment implements Initializable {
 
     public void makeaNewOrder(){
         int nextOrderId = dao.getNextOrderId();
-        currentOrder = new Order(nextOrderId, getTableNumber(), getCurrentEmploye().getId(), 0, date);
+        currentOrder = new Order(nextOrderId, getTableNumber(), getCurrentEmploye().getId(), 0);
     }
 
     public void setCurrentEmploye(Employe currentEmploye, int tableNumber) {
@@ -178,7 +177,7 @@ public class OrderManagment implements Initializable {
         listProducts();
     }
 
-    public void onBack(ActionEvent actionEvent) throws IOException {
+    public void saveOrder(){
         dao.saveOrder(currentOrder);
 
         Map<Integer, Integer> productIdAmountMap = new HashMap<>();
@@ -202,6 +201,10 @@ public class OrderManagment implements Initializable {
             Include include = new Include(orderId, productId, amount);
             dao.saveInclude(include);
         }
+    }
+
+    public void onBack(ActionEvent actionEvent) throws IOException {
+        saveOrder();
 
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
         Parent root = loader.load();
@@ -210,7 +213,7 @@ public class OrderManagment implements Initializable {
         StartApplication.setRoot(root);
     }
 
-    private void questionForPayMethod(){
+    private void questionForPayMethod() throws IOException {
         Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
         paymentAlert.setTitle("Fizetési mód");
         paymentAlert.setHeaderText(null);
@@ -223,8 +226,15 @@ public class OrderManagment implements Initializable {
 
         Optional<ButtonType> result = paymentAlert.showAndWait();
         if (result.isPresent() && result.get() == cashButton) {
-            System.out.println("Készpénzzel fizet.");
+            saveOrder();
+            FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
+            Parent root = loader.load();
+            BillHandler controller = loader.getController();
+            controller.setPayMethod("Készpénz");
+            controller.setOrder(currentOrder);
+            StartApplication.setRoot(root);
         } else {
+            saveOrder();
             System.out.println("Bankkártyával fizet.");
         }
     }
@@ -256,12 +266,9 @@ public class OrderManagment implements Initializable {
         questionForBillingBreakdown();
     }
 
-    public void nothing(){
-        System.out.println(getCurrentEmploye().getName() + ", " + getTableNumber());
-    }
-
     public void onPreviousOrder(ActionEvent actionEvent) {
         List<Include> previousIncludes = dao.getIncludes(dao.getOrderId(getTableNumber(), getCurrentEmploye().getId()));
+        currentOrder.setId(currentOrder.getId()-1);
         for(Include include : previousIncludes){
             for (int i=0; i<include.getAmount();i++){
                 handleProductName(dao.getProductById(include.getProductId()));

@@ -8,21 +8,18 @@ public class Order {
     private int tableNumber;
     private int employeId;
     private int numberOfProduct;
-    private Date date;
 
-    public Order(int id, int tableNumber, int employeId, int numberOfProduct, Date date) {
+    public Order(int id, int tableNumber, int employeId, int numberOfProduct) {
         this.id = id;
         this.tableNumber = tableNumber;
         this.employeId = employeId;
         this.numberOfProduct = numberOfProduct;
-        this.date = date;
     }
 
-    public Order(int tableNumber, int employeId, int numberOfProduct, Date date) {
+    public Order(int tableNumber, int employeId, int numberOfProduct) {
         this.tableNumber = tableNumber;
         this.employeId = employeId;
         this.numberOfProduct = numberOfProduct;
-        this.date = date;
     }
 
     public int getId() {
@@ -55,13 +52,5 @@ public class Order {
 
     public void setNumberOfProduct(int numberOfProduct) {
         this.numberOfProduct = numberOfProduct;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 }

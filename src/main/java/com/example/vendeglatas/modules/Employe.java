@@ -7,6 +7,10 @@ public class Employe {
     private String password;
     private String post;
 
+    public Employe(int id) {
+        this.id = id;
+    }
+
     public Employe(String restaurantName, String name, String password, String post) {
         this.restaurantName = restaurantName;
         this.name = name;

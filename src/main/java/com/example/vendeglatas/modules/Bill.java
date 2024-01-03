@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class Bill {
     private int id;
-    private int employeId;
+    private int orderId;
     private int price;
     private Date time;
     private String payMethod;
 
-    public Bill(int id, int employeId, int price, Date time, String payMethod) {
+    public Bill(int id, int orderId, int price, Date time, String payMethod) {
         this.id = id;
-        this.employeId = employeId;
+        this.orderId = orderId;
         this.price = price;
         this.time = time;
         this.payMethod = payMethod;
@@ -25,12 +25,12 @@ public class Bill {
         this.id = id;
     }
 
-    public int getEmployeId() {
-        return employeId;
+    public int getOrderId() {
+        return orderId;
     }
 
-    public void setEmployeId(int employeId) {
-        this.employeId = employeId;
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 
     public int getPrice() {

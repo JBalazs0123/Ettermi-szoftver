@@ -14,6 +14,8 @@ public class DAO implements IDAO{
         return con;
     }
 
+
+
     public Product getProductById(int id){
         String sql ="SELECT * FROM termek WHERE termekAzonosito='" + id + "'";
         Product product = new Product(id);
@@ -88,7 +90,7 @@ public class DAO implements IDAO{
     }
 
     public void saveOrder(Order order){
-        String sql = "INSERT INTO rendeles VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO rendeles VALUES (?, ?, ?, ?)";
         try {
             Connection con = DAO();
             PreparedStatement statement = con.prepareStatement(sql);
@@ -96,9 +98,6 @@ public class DAO implements IDAO{
             statement.setInt(2, order.getTableNumber());
             statement.setInt(3, order.getEmployeId());
             statement.setInt(4, order.getNumberOfProduct());
-            java.util.Date utilDate = order.getDate();
-            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-            statement.setDate(5, sqlDate);
             statement.executeUpdate();
             statement.close();
             con.close();
@@ -140,6 +139,25 @@ public class DAO implements IDAO{
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public Employe getEmployeById(int id) {
+        String sql = "SELECT * FROM alkalmazott WHERE alkalmazottAzonosito='" + id + "'";
+        Employe employe = new Employe(id);
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                employe = new Employe(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3),
+                        resultSet.getString(4), resultSet.getString(5));
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return employe;
     }
 
     public List<Employe> getEmploye() {
