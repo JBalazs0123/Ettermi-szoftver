@@ -9,6 +9,13 @@ public class Bill {
     private Date time;
     private String payMethod;
 
+    public Bill(int orderId, int price, Date time, String payMethod) {
+        this.orderId = orderId;
+        this.price = price;
+        this.time = time;
+        this.payMethod = payMethod;
+    }
+
     public Bill(int id, int orderId, int price, Date time, String payMethod) {
         this.id = id;
         this.orderId = orderId;

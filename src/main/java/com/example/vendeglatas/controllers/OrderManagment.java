@@ -178,6 +178,10 @@ public class OrderManagment implements Initializable {
     }
 
     public void saveOrder(){
+        if(dao.checkOrder(currentOrder.getId())){
+            dao.deletOrder(currentOrder.getId());
+            dao.deleteIncludes(currentOrder.getId());
+        }
         dao.saveOrder(currentOrder);
 
         Map<Integer, Integer> productIdAmountMap = new HashMap<>();
@@ -213,6 +217,16 @@ public class OrderManagment implements Initializable {
         StartApplication.setRoot(root);
     }
 
+    private void ordertoBill(String payMethod) throws IOException {
+        saveOrder();
+        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
+        Parent root = loader.load();
+        BillHandler controller = loader.getController();
+        controller.setPayMethod(payMethod);
+        controller.setOrder(currentOrder);
+        StartApplication.setRoot(root);
+    }
+
     private void questionForPayMethod() throws IOException {
         Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
         paymentAlert.setTitle("Fizetési mód");
@@ -226,16 +240,9 @@ public class OrderManagment implements Initializable {
 
         Optional<ButtonType> result = paymentAlert.showAndWait();
         if (result.isPresent() && result.get() == cashButton) {
-            saveOrder();
-            FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
-            Parent root = loader.load();
-            BillHandler controller = loader.getController();
-            controller.setPayMethod("Készpénz");
-            controller.setOrder(currentOrder);
-            StartApplication.setRoot(root);
+            ordertoBill("Készpénz");
         } else {
-            saveOrder();
-            System.out.println("Bankkártyával fizet.");
+            ordertoBill("Bankkártya");
         }
     }
 

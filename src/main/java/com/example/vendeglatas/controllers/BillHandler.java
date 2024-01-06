@@ -2,10 +2,7 @@ package com.example.vendeglatas.controllers;
 
 import com.example.vendeglatas.StartApplication;
 import com.example.vendeglatas.database.DAO;
-import com.example.vendeglatas.modules.Employe;
-import com.example.vendeglatas.modules.Include;
-import com.example.vendeglatas.modules.Order;
-import com.example.vendeglatas.modules.Product;
+import com.example.vendeglatas.modules.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -83,7 +80,6 @@ public class BillHandler implements Initializable {
     }
 
     public void onList(ActionEvent actionEvent) {
-
         employe = dao.getEmployeById(getOrder().getEmployeId());
         firstGrid.add(new Label("Étterem: "), 0, 0);
         firstGrid.add(new Label(employe.getRestaurantName()), 1, 0);
@@ -113,7 +109,7 @@ public class BillHandler implements Initializable {
         firstGrid.add(new Label("Dátum: "), 0, (row+2));
         firstGrid.add(new Label(date.toString()), 1, (row+2));
         firstGrid.add(new Label("Rendelés azonosító: " + getOrder().getId()), 0, (row+3));
-        firstGrid.add(new Label(""), 1, (row+3)); //szamla azonosito todo*/
+        firstGrid.add(new Label(""), 1, (row+3)); //szamla azonosito*/
         firstGrid.add(new Label("Végösszeg: "), 0, 29);
         firstGrid.add(new Label(amount + " Ft"), 1, 29);
         firstGrid.add(new Label("Fizetési mód"), 0, 30);
@@ -122,5 +118,8 @@ public class BillHandler implements Initializable {
         firstGrid.add(new Label(date.toString()), 1, 31);
         firstGrid.add(new Label("Rendelés:  " + getOrder().getId()), 0, 32);
         firstGrid.add(new Label(""), 1, 32); //szamla azonosito todo
+
+        Bill bill = new Bill(getOrder().getId(), amount, date, getPayMethod());
+        dao.saveBill(bill);
     }
 }

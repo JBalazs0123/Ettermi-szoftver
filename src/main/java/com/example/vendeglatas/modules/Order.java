@@ -9,6 +9,10 @@ public class Order {
     private int employeId;
     private int numberOfProduct;
 
+    public Order(int id) {
+        this.id = id;
+    }
+
     public Order(int id, int tableNumber, int employeId, int numberOfProduct) {
         this.id = id;
         this.tableNumber = tableNumber;

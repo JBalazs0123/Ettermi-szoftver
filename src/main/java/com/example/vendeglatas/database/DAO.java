@@ -2,6 +2,7 @@ package com.example.vendeglatas.database;
 
 import com.example.vendeglatas.modules.*;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -14,7 +15,81 @@ public class DAO implements IDAO{
         return con;
     }
 
+    public void saveBill(Bill bill){
+        String sql = "INSERT INTO szamla VALUES (?, ?, ?, ?, ?)";
+        try {
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setNull(1, java.sql.Types.INTEGER);
+            statement.setInt(2, bill.getOrderId());
+            statement.setInt(3, bill.getPrice());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String formattedDate = sdf.format(bill.getTime());
+            statement.setString(4, formattedDate);
+            statement.setString(5, bill.getPayMethod());
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
+    public void updtaeOrder(int orderId, int productNumber){
+        String sql ="UPDATE rendeles SET termekekSzama = '" + productNumber + "'WHERE rendelesAzonosito='" + orderId + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deletOrder(int orderId){
+        String sql ="DELETE FROM rendeles WHERE rendelesazonosito='" + orderId + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteIncludes(int orderId){
+        String sql ="DELETE FROM tartalmaz WHERE rendelesAzonosito='" + orderId + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkOrder(int orderId){
+        String sql ="SELECT * FROM rendeles WHERE rendelesAzonosito='" + orderId + "'";
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                return true;
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 
     public Product getProductById(int id){
         String sql ="SELECT * FROM termek WHERE termekAzonosito='" + id + "'";
