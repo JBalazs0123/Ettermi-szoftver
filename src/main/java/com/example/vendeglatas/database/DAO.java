@@ -15,6 +15,50 @@ public class DAO implements IDAO{
         return con;
     }
 
+    public void updateProduct(String name, int price){
+        String sql ="UPDATE termek SET ar = '" + price + "'WHERE termékNév='" + name + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteProduct(String name){
+        String sql ="DELETE FROM termek WHERE termékNév='" + name + "'";
+        try{
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void saveProduct(Product product){
+        String sql = "INSERT INTO termek VALUES (?, ?, ?, ?, ?)";
+        try {
+            Connection con = DAO();
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setNull(1, java.sql.Types.INTEGER);
+            statement.setString(2, product.getCategory());
+            statement.setString(3, null);
+            statement.setString(4, product.getName());
+            statement.setInt(5, product.getPrice());
+            statement.executeUpdate();
+            statement.close();
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void saveBill(Bill bill){
         String sql = "INSERT INTO szamla VALUES (?, ?, ?, ?, ?)";
         try {

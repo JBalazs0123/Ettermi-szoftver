@@ -17,7 +17,10 @@
          <font>
             <Font size="24.0" />
          </font></Text>
-      <Button layoutX="14.0" layoutY="681.0" mnemonicParsing="false" onAction="#onBack" text="Vissza" />
+      <Button layoutX="14.0" layoutY="681.0" mnemonicParsing="false" onAction="#onBack" text="Vissza">
+         <font>
+            <Font size="14.0" />
+         </font></Button>
       <Pane layoutX="14.0" layoutY="174.0" prefHeight="400.0" prefWidth="400.0">
          <children>
             <Label layoutX="77.0" layoutY="91.0" text="Név:">
@@ -43,8 +46,14 @@
             <TextField fx:id="nameRegist" layoutX="139.0" layoutY="89.0" prefHeight="25.0" prefWidth="180.0" />
             <TextField fx:id="pswRegist" layoutX="139.0" layoutY="131.0" prefHeight="25.0" prefWidth="180.0" />
             <ComboBox fx:id="postRegist" layoutX="139.0" layoutY="215.0" prefHeight="25.0" prefWidth="180.0" />
-            <Button layoutX="95.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse" />
-            <Button layoutX="218.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSaveRegist" text="Mentés" />
+            <Button layoutX="95.0" layoutY="310.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="218.0" layoutY="310.0" mnemonicParsing="false" onAction="#onSaveRegist" text="Mentés">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
             <TextField fx:id="pswRegistAgain" layoutX="139.0" layoutY="173.0" prefHeight="25.0" prefWidth="180.0" />
             <Label layoutX="52.0" layoutY="175.0" text="Jelszó ismét:">
                <font>
@@ -82,14 +91,23 @@
                </font>
             </Text>
             <ComboBox fx:id="postBox" layoutX="168.0" layoutY="201.0" prefHeight="25.0" prefWidth="150.0" />
-            <Button layoutX="75.0" layoutY="308.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse" />
-            <Button layoutX="273.0" layoutY="308.0" mnemonicParsing="false" onAction="#onPostUpdate" text="Előléptetés" />
+            <Button layoutX="75.0" layoutY="308.0" mnemonicParsing="false" onAction="#onCancelRegist" text="Mégse">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <Button layoutX="273.0" layoutY="308.0" mnemonicParsing="false" onAction="#onPostUpdate" text="Előléptetés">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
             <Label fx:id="messageRegist1" layoutX="90.0" layoutY="255.0" prefHeight="20.0" prefWidth="220.0" textAlignment="CENTER">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="176.0" layoutY="308.0" mnemonicParsing="false" onAction="#onDelete" text="Törlés" />
+            <Button layoutX="176.0" layoutY="308.0" mnemonicParsing="false" onAction="#onDelete" text="Törlés">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
          </children>
       </Pane>
       <Pane layoutX="440.0" layoutY="174.0" prefHeight="400.0" prefWidth="400.0">
