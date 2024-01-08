@@ -33,7 +33,16 @@ public class EditProduct implements Initializable {
     @FXML private TableColumn<Product, String> tableProduct;
     @FXML private TableColumn<Product, Integer> tablePrice;
 
+    private Employe currentEmploye;
     DAO dao = new DAO();
+
+    public Employe getCurrentEmploye() {
+        return currentEmploye;
+    }
+
+    public void setCurrentEmploye(Employe currentEmploye) {
+        this.currentEmploye = currentEmploye;
+    }
 
     public void reload() throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("EditProduct.fxml"));
@@ -44,6 +53,8 @@ public class EditProduct implements Initializable {
     public void onBack(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
         Parent root = loader.load();
+        MenuController controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 

@@ -66,18 +66,24 @@ public class MenuController {
     public void onDailyRecap(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("DailyRecap.fxml"));
         Parent root = loader.load();
+        DailyRecap controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 
     public void onCreateProfile(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("CreateProfile.fxml"));
         Parent root = loader.load();
+        CreateProfile controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 
     public void onEditProduct(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("EditProduct.fxml"));
         Parent root = loader.load();
+        EditProduct controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 

@@ -3,6 +3,7 @@ package com.example.vendeglatas.database;
 import com.example.vendeglatas.modules.*;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
@@ -13,6 +14,25 @@ public class DAO implements IDAO{
         Class.forName(DRIVER);
         Connection con = DriverManager.getConnection(DB_URL, USER, PASS);
         return con;
+    }
+
+    public List<Bill> getBillByDate(LocalDate date){
+        String sql ="SELECT * FROM szamla WHERE idopont='" + date + "'";
+        List<Bill> bills = new ArrayList<>();
+        try {
+            Connection connection = DAO();
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Bill tmp = new Bill(resultSet.getInt(1), resultSet.getInt(2), resultSet.getInt(3), resultSet.getDate(4), resultSet.getString(5));
+                bills.add(tmp);
+            }
+            resultSet.close();
+            connection.close();
+        }  catch (SQLException | ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return bills;
     }
 
     public void updateProduct(String name, int price){

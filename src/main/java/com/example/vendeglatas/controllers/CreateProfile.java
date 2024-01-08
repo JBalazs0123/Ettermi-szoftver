@@ -32,6 +32,16 @@ public class CreateProfile implements Initializable {
     @FXML private TextField pswRegist;
     @FXML private ComboBox postRegist = new ComboBox<String>();
 
+    private Employe currentEmploye;
+
+    public Employe getCurrentEmploye() {
+        return currentEmploye;
+    }
+
+    public void setCurrentEmploye(Employe currentEmploye) {
+        this.currentEmploye = currentEmploye;
+    }
+
     public void onSaveRegist(ActionEvent actionEvent) throws IOException {
         String name = this.nameRegist.getText();
         String password = this.pswRegist.getText();
@@ -100,6 +110,8 @@ public class CreateProfile implements Initializable {
     public void onBack(ActionEvent actionEvent) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
         Parent root = loader.load();
+        MenuController controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
 
