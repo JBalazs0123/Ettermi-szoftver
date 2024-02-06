@@ -7,10 +7,10 @@ import com.example.vendeglatas.database.DAO;
 import java.util.List;
 
 public interface IDAO {
-    String DB_URL = "jdbc:mysql://localhost:3306/vendeglatas";
+    String DB_URL = "jdbc:mysql://localhost:3307/vendeglatas";
     String DRIVER = "com.mysql.cj.jdbc.Driver";
-    String USER = "szakdoga";
-    String PASS = "szakdoga!23";
+    String USER = "root";
+    String PASS = "";
 
     List<Restaurant> getRestaurants();
     void addRestaurant(Restaurant restaurant);

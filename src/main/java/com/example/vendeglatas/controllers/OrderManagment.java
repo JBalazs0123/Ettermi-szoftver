@@ -57,6 +57,10 @@ public class OrderManagment implements Initializable {
         makeaNewOrder();
     }
 
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
     public int getTableNumber() {
         return tableNumber;
     }
@@ -261,8 +265,11 @@ public class OrderManagment implements Initializable {
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == buttonTypeYes) {
+            saveOrder();
             FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillingBreakdown.fxml"));
             Parent root = loader.load();
+            BillingBreakdown controller = loader.getController();
+            controller.setCurrent(getCurrentEmploye(), getTableNumber(), currentOrder.getId());
             StartApplication.setRoot(root);
         } else {
             questionForPayMethod();

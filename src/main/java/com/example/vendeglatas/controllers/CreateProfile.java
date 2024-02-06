@@ -94,11 +94,15 @@ public class CreateProfile implements Initializable {
     public void reload() throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("CreateProfile.fxml"));
         Parent root = loader.load();
+        CreateProfile controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
     }
     public void reload(String message, int id) throws IOException {
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("CreateProfile.fxml"));
         Parent root = loader.load();
+        CreateProfile controller = loader.getController();
+        controller.setCurrentEmploye(getCurrentEmploye());
         StartApplication.setRoot(root);
         if(id == 0){
             messageRegist.setText(message);

@@ -125,6 +125,33 @@ public class DAO implements IDAO{
         }
     }
 
+    public void deleteIncludesOnlyOneItem(int orderId, int productId) {
+        String deleteSql = "DELETE FROM tartalmaz WHERE rendelesAzonosito = ? AND termekAzonosito = ? AND mennyiség = 1";
+        String updateSql = "UPDATE tartalmaz SET mennyiség = mennyiség - 1 WHERE rendelesAzonosito = ? AND termekAzonosito = ? AND mennyiség > 1";
+
+        try {
+            Connection con = DAO();
+
+            // Első lépés: DELETE végrehajtása
+            PreparedStatement deleteStatement = con.prepareStatement(deleteSql);
+            deleteStatement.setInt(1, orderId);
+            deleteStatement.setInt(2, productId);
+            deleteStatement.executeUpdate();
+            deleteStatement.close();
+
+            // Második lépés: UPDATE végrehajtása
+            PreparedStatement updateStatement = con.prepareStatement(updateSql);
+            updateStatement.setInt(1, orderId);
+            updateStatement.setInt(2, productId);
+            updateStatement.executeUpdate();
+            updateStatement.close();
+
+            con.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void deleteIncludes(int orderId){
         String sql ="DELETE FROM tartalmaz WHERE rendelesAzonosito='" + orderId + "'";
         try{
