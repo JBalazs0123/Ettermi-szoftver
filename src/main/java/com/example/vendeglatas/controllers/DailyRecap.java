@@ -12,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -62,11 +63,15 @@ public class DailyRecap {
         billCounter.setText(numberOfBills + "");
         profitCounter.setText(numberOfProfits + " Ft");
 
+        DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
         double percentage = ((double) numberOfCash / numberOfBills ) * 100;
-        cashCounter.setText(percentage + "%");
+        String formattedValue = decimalFormat.format(percentage);
+        cashCounter.setText(formattedValue + "%");
 
         percentage = ((double) numberOfCard / numberOfBills ) * 100;
-        cardCounter.setText(percentage + "%");
+        formattedValue = decimalFormat.format(percentage);
+        cardCounter.setText(formattedValue + "%");
 
     }
 }
