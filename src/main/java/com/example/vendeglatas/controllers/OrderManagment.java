@@ -27,6 +27,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class OrderManagment implements Initializable {
     @FXML private HBox priceContainer = new HBox();
@@ -117,6 +118,30 @@ public class OrderManagment implements Initializable {
         handlePrice(amount);
     }
 
+    private List<String> buttonColors = Arrays.asList(
+            "#ADD8E6", // világos kék
+            "#90EE90", // világos zöld
+            "#FFFFE0", // világos sárga
+            "#FFA07A", // világos narancs
+            "#FFB6C1",  // világos rózsaszín
+            "#DDA0DD", // világos lila
+            "#FFDEAD", // világos barackszín
+            "#AFEEEE", // világos türkiz
+            "#F5DEB3"  // világos bézs
+    );
+
+    private int colorIndex = 0;
+    private void setButtonStyle(Button button) {
+        button.setFont(Font.font(16));
+        button.setPrefWidth(140);
+        button.setPrefHeight(60);
+
+        String color = buttonColors.get(colorIndex);
+        button.setStyle("-fx-background-color: " + color + "; -fx-text-fill: black;");
+
+        colorIndex = (colorIndex + 1) % buttonColors.size();
+    }
+
     //Kategőria kattintás után listázza a termékeket
     public void handleProductCategory(List<Product> products, String category){
         buttonContainerForProductsName.getChildren().clear();
@@ -127,6 +152,7 @@ public class OrderManagment implements Initializable {
             Product product = iterator.next();
             if (product.getCategory().equals(category)){
                 Button button = new Button(product.getName());
+                setButtonStyle(button);
                 button.setFont(Font.font(14));
                 button.setPrefWidth(140);
                 button.setPrefHeight(60);
@@ -144,16 +170,26 @@ public class OrderManagment implements Initializable {
     //Termékek listázása, ez a függvény a termék kategóriákat írja ki
     public void listProducts(){
         List<Product> products = new DAO().getProducts();
-        Iterator<Product> iterator = products.iterator();
-        Set<String> uniqueCategory = new HashSet<>();
-        while (iterator.hasNext()) {
-            Product product = iterator.next();
-            uniqueCategory.add(product.getCategory());
-        }
+
+        List<String> categoryOrder = Arrays.asList("Előételek", "Levesek", "Főételek", "Desszertek", "Üdítők", "Kávék", "Hosszú italok", "Rövid italok", "Egyéb");
+
+        Set<String> uniqueCategories = products.stream()
+                .map(Product::getCategory)
+                .filter(categoryOrder::contains)
+                .collect(Collectors.toCollection(LinkedHashSet::new));
+
+        List<String> sortedCategories = categoryOrder.stream()
+                .filter(uniqueCategories::contains)
+                .collect(Collectors.toList());
+
+
         int columnIndex = 0;
         int rowIndex = 0;
-        for (String category : uniqueCategory){
+
+        // Rendezett kategóriák megjelenítése
+        for (String category : sortedCategories) {
             Button button = new Button(category);
+            setButtonStyle(button);
             button.setFont(Font.font(16));
             button.setPrefWidth(140);
             button.setPrefHeight(60);
@@ -192,6 +228,7 @@ public class OrderManagment implements Initializable {
         boolean runCounter = true;
         int orderId = 0;
         for (Include include : currentIncludeList){
+            System.out.println(include.toString());
             if(runCounter){
                 orderId = include.getOrderId();
                 runCounter = false;
@@ -201,7 +238,6 @@ public class OrderManagment implements Initializable {
 
             productIdAmountMap.merge(productId, amount, Integer::sum);
         }
-
         for (Map.Entry<Integer, Integer> entry : productIdAmountMap.entrySet()){
             int productId = entry.getKey();
             int amount = entry.getValue();
@@ -222,6 +258,10 @@ public class OrderManagment implements Initializable {
     }
 
     private void ordertoBill(String payMethod) throws IOException {
+        this.currentOrder.setId(this.currentOrder.getId()-1);
+        for(Include include: currentIncludeList){
+            include.setOrderId(include.getOrderId()-1);
+        }
         saveOrder();
         FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("BillHandler.fxml"));
         Parent root = loader.load();

@@ -8,67 +8,69 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.DailyRecap">
+<AnchorPane prefHeight="820.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.DailyRecap" style="-fx-background-color: white;">
    <children>
-      <Text layoutX="554.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Napi elszámolás">
+      <Text layoutX="684.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Napi elszámolás" fill="black">
          <font>
             <Font size="24.0" />
-         </font></Text>
-      <Button layoutX="14.0" layoutY="676.0" mnemonicParsing="false" onAction="#onBack" text="Vissza">
+         </font>
+      </Text>
+      <Button layoutX="14.0" layoutY="742.0" mnemonicParsing="false" onAction="#onBack" style="-fx-background-color: black; -fx-text-fill: white;" text="Vissza">
          <font>
-            <Font size="14.0" />
-         </font></Button>
-      <Pane layoutX="340.0" layoutY="76.0" prefHeight="600.0" prefWidth="600.0">
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Pane layoutX="420.0" layoutY="85.0" prefHeight="650.0" prefWidth="700.0" style="-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2;">
          <children>
-            <DatePicker fx:id="datePicker" layoutX="274.0" layoutY="83.0" prefHeight="30.0" prefWidth="200.0" />
-            <Button layoutX="205.0" layoutY="145.0" mnemonicParsing="false" onAction="#onDatePicker" text="Adatok lekérdezése">
+            <DatePicker fx:id="datePicker" layoutX="398.0" layoutY="87.0" prefHeight="32.0" prefWidth="220.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+            <Button layoutX="281.0" layoutY="140.0" mnemonicParsing="false" onAction="#onDatePicker" style="-fx-background-color: black; -fx-text-fill: white;" text="Adatok lekérdezése">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Button>
-            <Label layoutX="37.0" layoutY="88.0" text="Válassza ki a megfelelő dátumot:">
+            <Label layoutX="63.0" layoutY="89.0" text="Válassza ki a megfelelő dátumot:" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="148.0" layoutY="221.0" text="Összes számla:">
+            <Label layoutX="194.0" layoutY="220.0" text="Összes számla:" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="147.0" layoutY="271.0" text="Össz forgalom:">
+            <Label layoutX="193.0" layoutY="300.0" text="Össz forgalom:" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="163.0" layoutY="321.0" text="Készpénz:">
+            <Label layoutX="213.0" layoutY="380.0" text="Készpénz:" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="161.0" layoutY="371.0" text="Bankártya:">
+            <Label layoutX="211.0" layoutY="460.0" text="Bankártya:" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="billCounter" layoutX="284.0" layoutY="221.0">
+            <Label fx:id="billCounter" layoutX="384.0" layoutY="220.0" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="profitCounter" layoutX="284.0" layoutY="271.0">
+            <Label fx:id="profitCounter" layoutX="384.0" layoutY="300.0" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="cashCounter" layoutX="284.0" layoutY="321.0">
+            <Label fx:id="cashCounter" layoutX="384.0" layoutY="380.0" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="cardCounter" layoutX="284.0" layoutY="371.0">
+            <Label fx:id="cardCounter" layoutX="384.0" layoutY="460.0" textFill="black">
                <font>
-                  <Font size="14.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
          </children>

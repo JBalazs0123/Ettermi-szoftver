@@ -51,7 +51,11 @@ public class CreateProfile implements Initializable {
             messageRegist.setText("A jelszó nem egyezik!");
             return;
         }
-        new DAO().saveEmploye(new Employe("Etterem", name, password, post));
+
+        // Hash and salt the password
+        String hashedPassword = PasswordUtils.hashPassword(password);
+
+        new DAO().saveEmploye(new Employe("Etterem", name, hashedPassword, post));
         reload("Sikeres regisztráció", 0);
     }
 
@@ -78,16 +82,6 @@ public class CreateProfile implements Initializable {
     }
 
     public void onCancelRegist(ActionEvent actionEvent) throws IOException {
-        /*
-        List<Employe> employes = new DAO().getEmploye();
-        Iterator<Employe> iterator = employes.iterator();
-        while (iterator.hasNext()){
-            Employe employe1 = iterator.next();
-            if(employe1.getPassword().equals("asd")){
-                System.out.println("ugyanaz");
-            }
-        }
-        */
         reload();
     }
 

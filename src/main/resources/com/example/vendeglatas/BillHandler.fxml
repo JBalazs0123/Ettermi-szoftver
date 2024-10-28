@@ -10,30 +10,26 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.BillHandler">
+<AnchorPane prefHeight="820.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.BillHandler">
     <stylesheets>
         <URL value="@billHandler.css" />
     </stylesheets>
     <children>
-      <Text layoutX="193.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Számla">
+      <Button layoutX="346.0" layoutY="278.0" mnemonicParsing="false" onAction="#onBacktoMenu" style="-fx-background-color: black; -fx-text-fill: white;" text="Vissza menü">
          <font>
-            <Font size="18.0" />
-         </font></Text>
-      <Button layoutX="173.0" layoutY="210.0" mnemonicParsing="false" onAction="#onBacktoMenu" text="Vissza menü">
-         <font>
-            <Font size="14.0" />
+            <Font size="16.0" />
          </font></Button>
-      <Button layoutX="172.0" layoutY="311.0" mnemonicParsing="false" onAction="#onLogout" text="Kijelentkezés">
+      <Button layoutX="345.0" layoutY="381.0" mnemonicParsing="false" onAction="#onLogout" style="-fx-background-color: black; -fx-text-fill: white;" text="Kijelentkezés">
          <font>
-            <Font size="14.0" />
+            <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="162.0" layoutY="114.0" mnemonicParsing="false" onAction="#onList" text="Számla listázása">
+      <Button layoutX="335.0" layoutY="176.0" mnemonicParsing="false" onAction="#onList" style="-fx-background-color: black; -fx-text-fill: white;" text="Számla listázása">
          <font>
-            <Font size="14.0" />
+            <Font size="16.0" />
          </font>
       </Button>
-      <GridPane fx:id="firstGrid" alignment="CENTER" layoutX="462.0" layoutY="26.0" prefHeight="685.0" prefWidth="356.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-hgap: 2;">
+      <GridPane fx:id="firstGrid" alignment="CENTER" layoutX="592.0" layoutY="68.0" prefHeight="685.0" prefWidth="356.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-hgap: 2;">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="174.0" minWidth="10.0" prefWidth="110.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="241.0" minWidth="10.0" prefWidth="180.0" />
@@ -81,9 +77,9 @@
             <Insets bottom="6.0" left="6.0" right="6.0" top="6.0" />
          </padding>
       </GridPane>
-      <Text layoutX="578.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nyomtatási kép">
+      <Text layoutX="332.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nyomtatási kép">
          <font>
-            <Font size="18.0" />
+            <Font size="20.0" />
          </font>
       </Text>
    </children>

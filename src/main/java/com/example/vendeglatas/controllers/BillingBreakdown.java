@@ -131,6 +131,23 @@ public class BillingBreakdown implements Initializable {
         questionForPayMethod();
     }
 
+    private List<String> buttonColors = Arrays.asList(
+            "#ADD8E6", // világos kék
+            "#90EE90", // világos zöld
+            "#FFFFE0", // világos sárga
+            "#FFA07A", // világos narancs
+            "#FFB6C1"  // világos rózsaszín
+    );
+
+    private void setButtonStyle(Button button) {
+        button.setFont(Font.font(16));
+        button.setPrefWidth(140);
+        button.setPrefHeight(60);
+        Random random = new Random();
+        String randomColor = buttonColors.get(random.nextInt(buttonColors.size()));
+        button.setStyle("-fx-background-color: " + randomColor + "; -fx-text-fill: black;");
+    }
+
     public void setButtonForProductCategorie() {
         List<Product> products = dao.getProducts();
         Iterator<Product> iterator = products.iterator();
@@ -143,6 +160,7 @@ public class BillingBreakdown implements Initializable {
         int rowIndex = 0;
         for (String category : uniqueCategory){
             Button button = new Button(category);
+            setButtonStyle(button);
             button.setFont(Font.font(16));
             button.setPrefWidth(140);
             button.setPrefHeight(60);

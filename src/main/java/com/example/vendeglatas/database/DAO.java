@@ -99,19 +99,6 @@ public class DAO implements IDAO{
         }
     }
 
-    public void updtaeOrder(int orderId, int productNumber){
-        String sql ="UPDATE rendeles SET termekekSzama = '" + productNumber + "'WHERE rendelesAzonosito='" + orderId + "'";
-        try{
-            Connection con = DAO();
-            PreparedStatement statement = con.prepareStatement(sql);
-            statement.executeUpdate();
-            statement.close();
-            con.close();
-        } catch (ClassNotFoundException | SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public void deletOrder(int orderId){
         String sql ="DELETE FROM rendeles WHERE rendelesazonosito='" + orderId + "'";
         try{
@@ -293,15 +280,18 @@ public class DAO implements IDAO{
         return biggestOrderId;
     }
 
-    public void saveEmploye(Employe employe){
-        String sql = "INSERT INTO alkalmazott(nev, alkalmazottNev, jelszo, beosztas)" +
-                " VALUES ('" + employe.getRestaurantName() + "', '" + employe.getName() + "', '" + employe.getPassword() + "', '" + employe.getPost() + "')";
-        try {
-            Connection con = DAO();
-            Statement statement = con.createStatement();
-            statement.execute(sql);
-            statement.close();
-            con.close();
+    public void saveEmploye(Employe employe) {
+        String sql = "INSERT INTO alkalmazott(nev, alkalmazottNev, jelszo, beosztas) VALUES (?, ?, ?, ?)";
+
+        try (Connection con = DAO();
+             PreparedStatement preparedStatement = con.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, employe.getRestaurantName());
+            preparedStatement.setString(2, employe.getName());
+            preparedStatement.setString(3, employe.getPassword());
+            preparedStatement.setString(4, employe.getPost());
+
+            preparedStatement.executeUpdate();
         } catch (ClassNotFoundException | SQLException e) {
             throw new RuntimeException(e);
         }

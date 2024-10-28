@@ -39,4 +39,13 @@ public class Include {
     public void setProductId(int productId) {
         this.productId = productId;
     }
+
+    @Override
+    public String toString() {
+        return "Include{" +
+                "orderId=" + orderId +
+                ", productId=" + productId +
+                ", amount=" + amount +
+                '}';
+    }
 }

@@ -1,12 +1,28 @@
 package com.example.vendeglatas.modules;
 
-public class Table {
-    private int tableNumber;
-    private int numberOfGuests;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-    public Table(int tableNumber, int guestsNumber) {
+import java.io.Serializable;
+
+public class Table implements Serializable {
+    @JsonProperty("tableNumber")
+    private int tableNumber;
+
+    @JsonProperty("translateX")
+    private double translateX;
+
+    @JsonProperty("translateY")
+    private double translateY;
+
+    public Table() {
+    }
+
+    public Table(@JsonProperty("tableNumber") int tableNumber,
+                 @JsonProperty("translateX") double translateX,
+                 @JsonProperty("translateY") double translateY) {
         this.tableNumber = tableNumber;
-        this.numberOfGuests = guestsNumber;
+        this.translateX = translateX;
+        this.translateY = translateY;
     }
 
     public int getTableNumber() {
@@ -17,11 +33,19 @@ public class Table {
         this.tableNumber = tableNumber;
     }
 
-    public int getNumberOfGuests() {
-        return numberOfGuests;
+    public double getTranslateX() {
+        return translateX;
     }
 
-    public void setNumberOfGuests(int numberOfGuests) {
-        this.numberOfGuests = numberOfGuests;
+    public void setTranslateX(double translateX) {
+        this.translateX = translateX;
+    }
+
+    public double getTranslateY() {
+        return translateY;
+    }
+
+    public void setTranslateY(double translateY) {
+        this.translateY = translateY;
     }
 }

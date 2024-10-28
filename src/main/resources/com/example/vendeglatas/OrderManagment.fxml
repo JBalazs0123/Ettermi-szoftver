@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -9,21 +10,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.OrderManagment">
+<AnchorPane prefHeight="820.0" prefWidth="1540.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.vendeglatas.controllers.OrderManagment">
    <children>
-      <Text layoutX="583.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Számlavezetés">
+      <Text layoutX="694.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Számlavezetés">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font></Text>
-      <Button layoutX="66.0" layoutY="681.0" mnemonicParsing="false" onAction="#onBack" text="Mentés és vissza">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <Button layoutX="201.0" layoutY="681.0" mnemonicParsing="false" onAction="#onNextToPay" text="Tovább a fizetéshez">
-         <font>
-            <Font size="14.0" />
-         </font></Button>
-      <GridPane fx:id="buttonContainerForProductsCategory" layoutX="516.0" layoutY="106.0" prefHeight="140.0" prefWidth="750.0">
+       <Button layoutX="114.0" layoutY="740.0" mnemonicParsing="false" onAction="#onBack" style="-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: white;" text="Mentés és vissza" />
+       <Button layoutX="294.0" layoutY="740.0" mnemonicParsing="false" onAction="#onNextToPay" style="-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: white;" text="Tovább a fizetéshez" />
+      <GridPane fx:id="buttonContainerForProductsCategory" layoutX="656.0" layoutY="107.0" prefHeight="140.0" prefWidth="750.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" prefWidth="150.0" />
@@ -36,7 +31,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <GridPane fx:id="buttonContainerForProductsName" layoutX="516.0" layoutY="284.0" prefHeight="350.0" prefWidth="750.0">
+      <GridPane fx:id="buttonContainerForProductsName" layoutX="656.0" layoutY="284.0" prefHeight="350.0" prefWidth="750.0">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -52,11 +47,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
       </GridPane>
-      <GridPane fx:id="textContainerForBill" layoutX="66.0" layoutY="80.0" prefHeight="540.0" prefWidth="270.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-hgap: 1;">
+      <GridPane fx:id="textContainerForBill" layoutX="121.0" layoutY="67.0" prefHeight="578.0" prefWidth="359.0" style="-fx-border-width: 1; -fx-border-color: black; -fx-hgap: 1;">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="145.0" minWidth="10.0" prefWidth="145.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="107.0" minWidth="10.0" prefWidth="75.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="51.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="190.0" minWidth="10.0" prefWidth="190.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="123.20000000000002" minWidth="10.0" prefWidth="91.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="92.0" minWidth="10.0" prefWidth="74.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -87,12 +82,11 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
       </GridPane>
-      <HBox fx:id="priceContainer" layoutX="66.0" layoutY="627.0" prefHeight="29.0" prefWidth="270.0" style="-fx-border-width: 1; -fx-border-color: black;" />
-      <Button layoutX="356.0" layoutY="681.0" mnemonicParsing="false" onAction="#onPreviousOrder" text="Legutóbbi rendelés">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+      <HBox fx:id="priceContainer" layoutX="121.0" layoutY="662.0" prefHeight="29.0" prefWidth="359.0" style="-fx-border-width: 1; -fx-border-color: black;" />
+       <Button layoutX="497.0" layoutY="740.0" mnemonicParsing="false" onAction="#onPreviousOrder" style="-fx-font-size: 16px; -fx-background-color: black; -fx-text-fill: white;" text="Legutóbbi rendelés" />
    </children>
 </AnchorPane>

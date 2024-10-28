@@ -67,7 +67,7 @@ public class EditProduct implements Initializable {
         tablePrice.setCellValueFactory(c -> new SimpleIntegerProperty(c.getValue().getPrice()).asObject());
         tableForProducts.getItems().setAll(dao.getProducts());
 
-        ObservableList<String> categories = FXCollections.observableArrayList("Előételek", "Levesek", "Főátelek", "Desszertek", "Üdítők", "Kávék", "Hosszú italok", "Rövid italok", "Egyéb");
+        ObservableList<String> categories = FXCollections.observableArrayList("Előételek", "Levesek", "Főételek", "Desszertek", "Üdítők", "Kávék", "Hosszú italok", "Rövid italok", "Egyéb");
         newCategory.setItems(categories);
 
         ArrayList<String> productName = new ArrayList<>();

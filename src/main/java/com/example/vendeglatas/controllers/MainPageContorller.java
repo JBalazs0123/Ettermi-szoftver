@@ -19,11 +19,11 @@ public class MainPageContorller {
     @FXML private Label messageBox;
 
     public void onLogin(ActionEvent actionEvent) throws IOException {
-        String name = this.nameLogin.getText();
+        String name = sanitizeInput(this.nameLogin.getText());
         String password = this.pswLogin.getText();
         List<Employe> users = new DAO().getEmploye();
         for (Employe employe: users){
-            if(name.equals(employe.getName()) && password.equals(employe.getPassword())){
+            if(name.equals(employe.getName()) && PasswordUtils.verifyUserPassword(password, employe.getPassword())){
                 FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("Menu.fxml"));
                 Parent root = loader.load();
                 MenuController controller = loader.getController();
@@ -34,11 +34,8 @@ public class MainPageContorller {
         messageBox.setText("Hibás név vagy jelszó!");
     }
 
-
-    public void onCRUD(ActionEvent actionEvent) throws IOException {
-        FXMLLoader loader = new FXMLLoader(StartApplication.class.getResource("CRUD.fxml"));
-        Parent root = loader.load();
-        StartApplication.setRoot(root);
+    private String sanitizeInput(String input) {
+        // Basic sanitation, further sanitation can be added as per requirement
+        return input.replaceAll("[^a-zA-Z0-9]", "");
     }
-
 }
